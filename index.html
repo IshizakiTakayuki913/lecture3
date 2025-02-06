@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>sample123</title>
+    
+    <!-- <script src="./../node_modules2/aframe/dist/aframe-v1.6.0.min.js"></script> -->
+    <!-- <script src="./../node_modules/aframe-extras/dist/aframe-extras.min.js"></script> -->
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.4.0/dist/aframe-extras.min.js"></script> -->
+
+    <!-- <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      console.log(window.dataLayer)
+      gtag('js', new Date());
+      gtag('config', 'G-Y3XZ7NZFCZ');
+    </script> -->
+    
+    <script src="./solve.js"></script>
+    <script src="./solve2.js"></script>
+    <script src="./camera.js"></script>
+    <script src="./cubeTouch.js"></script>
+    <script src="./cubemrotate.js"></script>
+    <script src="./colorinput.js"></script>
+    <script src="./syncuser.js"></script>
+    <script src="./modelLoad.js"></script>
+    <script src="./meter.js"></script>
+    <script src="./motionList.js"></script>
+    <script src="./myanimation.js"></script>
+    
+    <script src="./iframe_display.js"></script>
+
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <script type="text/javascript">
+    AFRAME.registerComponent('press-key-board', presskeyboard())
+    AFRAME.registerComponent('camera-view', camera())
+    AFRAME.registerComponent('cube-rotate', cubemrotate())
+    AFRAME.registerComponent('cube-mode', cubemode())
+    AFRAME.registerComponent('color-set', colorinput())
+    AFRAME.registerComponent('sync-user', syncuser())
+    AFRAME.registerComponent('model-load',modelLoad())
+    AFRAME.registerComponent('my-animation', myanimation())
+  </script>
+
+  <body oncontextmenu="return false;" >
+    <div id="main-display">
+      <a-scene id="scene"
+        loading-screen="enabled: false"
+        renderer="sortObjects: true"
+        xr-mode-ui="enabled: false"
+        keyboard-shortcuts="enterVR: false; exitVR: false"
+        device-orientation-permission-ui="enabled: false"
+        embedded 
+        press-key-board cube-mode
+        model-load = "modelType: 0; sendComponents: cube-mode"
+      >
+
+        <a-entity class="root" position="0 0 0" rotation="0 0 0" visible="false">
+          <a-entity class="frame"></a-entity>
+        </a-entity>
+
+        <a-entity id="camOut" sync-user>
+          <a-camera 
+            id="camIn"
+            look-controls-enabled="false"
+            wasd-controls-enabled="false"
+            position="0 0 10"
+            fov="60"
+            camera-view="scene: scene;
+              camOut: camOut; camIn: camIn"
+            cube-rotate="ray: #view"
+            color-set="ray: #view">
+            <a-entity
+              id="view"
+              cursor="rayOrigin: mouse;"
+              raycaster="objects: .clickable; direction:0 0 -1">
+            </a-entity>
+          </a-camera>
+        </a-entity>
+        <!-- <a-plane color="#CCF" height="20" width="20" position="0 0 -10" rotation="0 0 0" material="opacty: 0.5"></a-plane> -->
+
+      </a-scene>
+
+      <iframe id="iframe" class="un-pointer-events" src="./index2.html" width="50vmin" height="50vmin"
+      ></iframe>
+
+    </div>
+
+    <div class="sulves-map">
+      <div class="btn-div back-div">
+        <img class="back-btn" src="./img/back-step.png">
+      </div>
+
+      <div class="btn-div reverse-div">
+        <img class="reverse-btn" src="./img/reverse-play.png">
+      </div>
+
+      <div class="btn-div stop-div">
+        <img class="stop-btn" src="./img/stop.png">
+      </div>
+
+      <div class="btn-div play-div">
+        <img class="play-btn" src="./img/play.png">
+      </div>
+
+      <div class="btn-div next-div">
+        <img class="next-btn" src="./img/next-step.png">
+      </div>
+
+      <div class="btn-div execution-div">
+        <!-- <img class="execution-clause-btn" src="./img/stop.png"> -->
+      </div>
+
+      <div class="step-meter">
+        <div class="meter-out time-meter">
+          <div class="meter-in un-pointer-events time-meter-animation">
+            <div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="a" class="root-menu">
+      <div class="folder-tile">
+        <p>ルービックキューブ</p>
+      </div>
+      <div class="scroll-folder">
+        <div id="c" class="folder" style="display: none;">
+          <div class="folder-tile">
+            <p>色入力</p>
+          </div>
+          <div>
+            <button class="color-set-buttont">実行</button>
+          </div>
+          <div id="d" class="folder">
+            <div class="folder-tile">
+              <p>補助機能</p>
+            </div>
+            <div>
+              <button >実行</button>
+            </div>
+          </div>
+        </div>　
+        <div id="b" class="folder">
+          <div class="folder-tile">
+            <p>解説</p>
+          </div>
+          <div>
+            <button class="calculation_set_buttont">実行</button>
+          </div>
+          <div id="d" class="folder">
+            <div class="folder-tile">
+              <p>再生速度</p>
+            </div>
+            <div>
+              <div class="meter-out spped-meter">
+                <div class="meter-in un-pointer-events">
+                  <div>
+                  </div>
+                </div>
+              </div>
+              <p>2</p>
+            </div>
+          </div>
+          <div id="e" class="folder">
+            <div class="folder-tile">
+              <p>手-透明度</p>
+            </div>
+            <div>
+              <div class="meter-out hand-opacity-meter">
+                <div class="meter-in un-pointer-events">
+                  <div>
+                  </div>
+                </div>
+              </div>
+              <p>1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="step-list-menu">
+      <div class="shadow-border-top"></div>
+      <div class="shadow-border-bottom"></div>
+      <div class="shadow-border-left"></div>
+      <div class="shadow-border-right"></div>
+      <div class="step-lists">
+        <div class="step-mode"> 
+          <!-- step0 step1 step2 step3 -->
+          <div class="step-title">
+            <p>下面クロス</p>
+          </div>
+          <!-- <div class="step-in-step">
+            <div class="step0"><p>1</p></div>
+            <div class="step1"><p>2</p></div>
+            <div class="step2"><p>3</p></div>
+            <div class="step3"><p>4</p></div>
+          </div> -->
+          <div class="step-img-div">
+            <img class="step-img" src="./img/step0.png">
+            <!-- <iframe class="main-display display-1" src="./index_frame.html"></iframe> -->
+          </div>
+        </div>
+        <div class="step-mode">
+          <!--  step4 step5 step6 step7 -->
+          <div class="step-title">
+            <p>下面コーナー</p>
+          </div>
+          <!-- <div class="step-in-step">
+            <div class="step4"><p>1</p></div>
+            <div class="step5"><p>2</p></div>
+            <div class="step6"><p>3</p></div>
+            <div class="step7"><p>4</p></div>
+          </div> -->
+          <div class="step-img-div">
+            <img class="step-img" src="./img/step1.png">
+          </div>
+        </div>
+        <div class="step-mode">
+          <!-- step8 step9 step10 step11 -->
+          <div class="step-title">
+            <p>中段エッジ</p>
+          </div>
+          <!-- <div class="step-in-step">
+            <div class="step8"><p>1</p></div>
+            <div class="step9"><p>2</p></div>
+            <div class="step10"><p>3</p></div>
+            <div class="step11"><p>4</p></div>
+          </div> -->
+          <div class="step-img-div">
+            <img class="step-img" src="./img/step2.png">
+          </div>
+        </div>
+        <div class="step-mode">
+          <!--  step12 -->
+          <div class="step-title">
+            <p>上面クロス</p>
+          </div>
+          <div class="step-img-div">
+            <img class="step-img" src="./img/step3.png">
+          </div>
+        </div>
+        <div class="step-mode">
+          <!--  step13 -->
+          <div class="step-title">
+            <p>上面コーナー</p>
+          </div>
+          <div class="step-img-div">
+            <img class="step-img" src="./img/step4.png">
+          </div>
+        </div>
+        <div class="step-mode">
+          <!-- step14 -->
+          <div class="step-title">
+            <p>上段クロス</p>
+          </div>
+          <div class="step-img-div">
+            <img class="step-img" src="./img/step5.png">
+          </div>
+        </div>
+        <div class="step-mode">
+          <!-- step15 -->
+          <div class="step-title">
+            <p>上段コーナー</p>
+          </div>
+          <div class="step-img-div">
+            <img class="step-img" src="./img/step6.png">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body >
+</html>
